@@ -2,9 +2,12 @@ import { Flex, Heading } from "@chakra-ui/react";
 
 const HomePage = () => {
   return (
-    <Flex height="100vh" alignItems="center" justifyContent="center">
-      <Flex direction="column" background="gray.100" p={12} rounded={6}>
-        <Heading mb={6}>Log In</Heading>
+    <Flex alignItems="center" justifyContent="center" mb="10px">
+      <Flex direction="column" background="gray.200" p={12} rounded={6}>
+        <h1>Normal Header (h1)</h1>
+        <Heading mb={6} color="blue.900">
+          Chakra UI Heading (h2)
+        </Heading>
       </Flex>
     </Flex>
   );
