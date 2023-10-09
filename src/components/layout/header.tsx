@@ -3,7 +3,7 @@
 import { Link } from "@chakra-ui/next-js";
 import { Heading, Button, Flex, Text } from "@chakra-ui/react";
 
-import ConnectButton from "@/lib/wallet/components/connect-button";
+// import ConnectButton from "@/lib/wallet/components/connect-button";
 
 export default function Header() {
   return (
