@@ -7,6 +7,7 @@ import environment from "../../../../environment";
 import ticketsHandlerABI from "@/assets/ABIs/abi_TicketsHandler_v0.4.4.json";
 import CircSupply from "./circulating-supply";
 import TotalValueLocked from "./tvl";
+import Countdown from "./countdown";
 
 export default function InfoBanner() {
   const compiledTicketsHandlerContract = json.parse(
@@ -27,11 +28,7 @@ export default function InfoBanner() {
 
   return (
     <Flex h="3vh" bg="blue.900" px="3" alignItems="center">
-      <Text fontSize="xs" color="white">
-        next Lottery Draw in:
-        {/* INSERT WEEKLY COUNTDOWN HERE */}
-        XX d. XX h. XX m.
-      </Text>
+      <Countdown />
 
       <Spacer />
 
