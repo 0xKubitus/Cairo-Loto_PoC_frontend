@@ -1,5 +1,7 @@
 import { Flex, Heading } from "@chakra-ui/react";
 
+// import styles from "@/styles/homepage.module.css";
+
 const HomePage = () => {
   return (
     <Flex alignItems="center" justifyContent="center" mb="10px">

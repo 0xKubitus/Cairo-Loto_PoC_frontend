@@ -4,7 +4,8 @@ import { Container, Center, Flex } from "@chakra-ui/react";
 import type { FC, ReactNode } from "react";
 
 import Navbar from "@/components/layout/navbar";
-import Header from "@/components/layout/header";
+// import InfoBannerOld from "@/components/layout/info-banner/info-banner";
+import InfoBanner from "@/components/layout/info-banner/index";
 import Footer from "@/components/layout/footer";
 
 interface Props {
@@ -16,7 +17,8 @@ const BaseLayout: FC<Props> = ({ children }) => {
       {/* <Container minW="full"> */}
       <Navbar />
 
-      <Header />
+      {/* <InfoBannerOld /> */}
+      <InfoBanner />
 
       <main>
         <Container minH="89vh" minW="full" bg="green.100">
