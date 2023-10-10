@@ -4,15 +4,24 @@ import { json } from "starknet";
 
 import environment from "../../../../environment";
 import ticketsHandlerABI from "@/assets/ABIs/abi_TicketsHandler_v0.4.4.json";
-import CircSupplyData from "./circulating-supply";
+import CircSupply from "./circulating-supply";
+import TotalValueLocked from "./tvl";
 
 export default function InfoBanner() {
+  const compiledTicketsHandlerContract = json.parse(
+    JSON.stringify(ticketsHandlerABI)
+  );
+
+  const { data, isLoading, error, refetch } = useContractRead({
+    address: environment.ticketsHandlerAddress,
+    abi: compiledTicketsHandlerContract,
+    functionName: "totalSupply",
+    args: [],
+    watch: true,
+  });
+
   return (
     <Flex h="3vh" bg="blue.900" px="3" alignItems="center">
-      <CircSupplyData />
-
-      <Spacer />
-
       <Text fontSize="xs" color="white">
         next Lottery Draw in:
         {/* INSERT WEEKLY COUNTDOWN HERE */}
@@ -27,9 +36,11 @@ export default function InfoBanner() {
 
       <Spacer />
 
-      <Text fontSize="xs" color="white">
-        current TVL: XXX,XXX USDC
-      </Text>
+      <CircSupply data={data} isLoading={isLoading} error={error} />
+
+      <Spacer />
+
+      <TotalValueLocked data={data} isLoading={isLoading} error={error} />
     </Flex>
   );
 }
