@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Flex, Spacer, Text } from "@chakra-ui/react";
 import { useContractRead } from "@starknet-react/core";
 import { json } from "starknet";
@@ -19,6 +20,10 @@ export default function InfoBanner() {
     args: [],
     watch: true,
   });
+
+  // "watch: true" parameter from "useContractRead" allows to refresh the data at each new block...
+  // TODO => I need to check if the data actually gets re-rendered or if I need to implement a useEffect
+  // or something else so that the new data displayed every time a new block is added to the chain!
 
   return (
     <Flex h="3vh" bg="blue.900" px="3" alignItems="center">
