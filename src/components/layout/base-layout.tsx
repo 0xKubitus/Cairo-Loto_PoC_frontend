@@ -19,7 +19,7 @@ const BaseLayout: FC<Props> = ({ children }) => {
       <Header />
 
       <main>
-        <Container h="91.5vh" minW="full" bg="green.100">
+        <Container minH="89vh" minW="full" bg="green.100">
           {children}
         </Container>
       </main>
