@@ -10,7 +10,7 @@ export default function Navbar() {
   const { account, address, status } = useAccount();
 
   return (
-    <Flex h="4vh" minW="full" align="center" justify="space-between">
+    <Flex h="4vh" minW="full" align="center" justify="space-between" px="3">
       <Link href="/" size="lg">
         <Text fontSize="3xl" as="b" color="blue.700">
           Cairo Loto
