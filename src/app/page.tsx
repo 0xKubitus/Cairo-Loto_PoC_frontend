@@ -24,7 +24,7 @@ function Countdown() {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
-  const initialTarget = new Date("October 11, 2023 17:53:00");
+  const initialTarget = new Date("October 11, 2023 18:00:00");
   const [nextTarget, setNextTarget] = useState(initialTarget);
 
   useEffect(() => {
@@ -49,9 +49,16 @@ function Countdown() {
       const s = Math.floor((difference % (1000 * 60)) / 1000);
       setSeconds(s);
 
+      // when countdown reaches zero, execute the following piece of code ->
       if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-        const newTarget: Date = new Date(nextTarget.getTime() + 604800000);
+        // setting up the next countdown
+        // const newTarget: Date = new Date(nextTarget.getTime() + 604800000); // here 604800000 is the number of milliseconds within one week
+        const newTarget: Date = new Date(nextTarget.getTime() + 86400000); // here 86400000 is the number of milliseconds within a day
         setNextTarget(newTarget);
+
+        // opens a modal with a button to "Run the on-chain Lottery Draw"
+
+        // adding a modal displaying an animation while the lottery process is running would be cool
       }
 
       // end of the "interval" function
