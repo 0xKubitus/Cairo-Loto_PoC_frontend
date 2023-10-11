@@ -59,3 +59,16 @@ export default function Countdown() {
     </Text>
   );
 }
+
+// /!\ WARNING /!\
+// THERE IS AN ISSUE WITH THE CURRENT IMPLEMENTATION OF THE COUNTDOWN:
+
+// Because I am relying on an 'initialTarget', the problem is that everytime a user arrives on the app, the default target is the 'initialTarget'...
+// It will not be updated once a lottery draw has been performed!
+
+// TODO => Find a way to compute the 'intialTarget' when a user arrives on the app.
+// The initial target should be the nber of milliseconds between the moment the user arrives and the next lottery draw.
+
+// So, for example:
+// - If a lottery draw is due every week, I have to choose a specific day of the week and a specific time for each draw to occur.
+// - If a lottery draw is due every day, I have to choose a specific time of the day for each draw to occur.
