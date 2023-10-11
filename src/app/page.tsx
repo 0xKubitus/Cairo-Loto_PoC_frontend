@@ -1,10 +1,16 @@
-import { Flex, Heading } from "@chakra-ui/react";
+"use client"; // needed for components using "useState" hook
+// (so here, the <Countdown /> component)
+
+import { useEffect, useState } from "react";
+
+import { Flex, Heading, Text } from "@chakra-ui/react";
 
 const HomePage = () => {
   return (
     <Flex height="100vh" alignItems="center" justifyContent="center">
       <Flex direction="column" background="gray.100" p={12} rounded={6}>
-        <Heading mb={6}>Log In</Heading>
+        <Heading mb="2">Countdown to next Lottery Draw</Heading>
+        <Countdown />
       </Flex>
     </Flex>
   );
@@ -12,102 +18,51 @@ const HomePage = () => {
 
 export default HomePage;
 
-// ----------------------------------------------------------------
+function Countdown() {
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
-// BELOW = CONTENT FROM NEXTJS BOILERPLATE:
+  const initialTarget = new Date("October 11, 2023 17:53:00");
+  const [nextTarget, setNextTarget] = useState(initialTarget);
 
-// import Image from 'next/image'
-// import styles from './page.module.css'
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // the content of this function will be executed every time after a certain interval of time, which is passed at the end of the function
 
-// export default function Home() {
-//   return (
-//     <main className={styles.main}>
-//       <div className={styles.description}>
-//         <p>
-//           Get started by editing&nbsp;
-//           <code className={styles.code}>src/app/page.tsx</code>
-//         </p>
-//         <div>
-//           <a
-//             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//           >
-//             By{' '}
-//             <Image
-//               src="/vercel.svg"
-//               alt="Vercel Logo"
-//               className={styles.vercelLogo}
-//               width={100}
-//               height={24}
-//               priority
-//             />
-//           </a>
-//         </div>
-//       </div>
+      const now = new Date();
+      const difference = nextTarget.getTime() - now.getTime();
 
-//       <div className={styles.center}>
-//         <Image
-//           className={styles.logo}
-//           src="/next.svg"
-//           alt="Next.js Logo"
-//           width={180}
-//           height={37}
-//           priority
-//         />
-//       </div>
+      // rounding up the difference between current time and target time in days
+      // (skip exceeding hours, minutes and seconds) ->
+      const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+      setDays(d);
 
-//       <div className={styles.grid}>
-//         <a
-//           href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-//           className={styles.card}
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           <h2>
-//             Docs <span>-&gt;</span>
-//           </h2>
-//           <p>Find in-depth information about Next.js features and API.</p>
-//         </a>
+      // using modulo to get only the remainder of the difference in hours, then min. and sec. ->
+      const h = Math.floor(
+        (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      setHours(h);
+      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      setMinutes(m);
+      const s = Math.floor((difference % (1000 * 60)) / 1000);
+      setSeconds(s);
 
-//         <a
-//           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-//           className={styles.card}
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           <h2>
-//             Learn <span>-&gt;</span>
-//           </h2>
-//           <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-//         </a>
+      if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
+        const newTarget: Date = new Date(nextTarget.getTime() + 604800000);
+        setNextTarget(newTarget);
+      }
 
-//         <a
-//           href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-//           className={styles.card}
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           <h2>
-//             Templates <span>-&gt;</span>
-//           </h2>
-//           <p>Explore the Next.js 13 playground.</p>
-//         </a>
+      // end of the "interval" function
+    }, 1000); // here "1000" means 1 second, so our timer will refresh every second
 
-//         <a
-//           href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-//           className={styles.card}
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           <h2>
-//             Deploy <span>-&gt;</span>
-//           </h2>
-//           <p>
-//             Instantly deploy your Next.js site to a shareable URL with Vercel.
-//           </p>
-//         </a>
-//       </div>
-//     </main>
-//   )
-// }
+    return () => clearInterval(interval);
+  }, [nextTarget]);
+
+  return (
+    <Text fontSize="xl" align="center" color="red" as="b">
+      {days} days, {hours} hours, {minutes} min, {seconds} sec.
+    </Text>
+  );
+}
