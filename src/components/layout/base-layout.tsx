@@ -13,7 +13,6 @@ interface Props {
 const BaseLayout: FC<Props> = ({ children }) => {
   return (
     <>
-      {/* <Container minW="full"> */}
       <Navbar />
 
       <InfoBanner />
@@ -25,7 +24,6 @@ const BaseLayout: FC<Props> = ({ children }) => {
       </main>
 
       <Footer />
-      {/* </Container> */}
     </>
   );
 };
