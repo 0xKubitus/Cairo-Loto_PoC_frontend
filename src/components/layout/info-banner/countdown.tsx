@@ -6,32 +6,16 @@ import { Text } from "@chakra-ui/react";
 import { json } from "starknet";
 
 import environment from "../../../../environment";
-// import ticketsHandlerABI from "@/assets/ABIs/abi_TicketsHandler_v0.4.4.json";
 // import lotteryManagerABI from "@/assets/ABIs/abi_LotteryManager_v0.x.x.json";
 import compiledLotteryManagerContract from "@/assets/ABIs/my_project_Example.sierra.json"; // TO BE REPLACED BY THE LOTTERY MANAGER'S CONTRACT SIERRA REPRESENTATION (obtained when compiling)
 
-// const compiledLotteryManagerContract = json.parse(
-//   JSON.stringify(lotteryManagerABI)
-// );
-const lotteryManagerABI = compiledLotteryManagerContract.abi;
+const lotteryManagerABI = compiledLotteryManagerContract.abi; // Cairo1 contracts' `.sierra` file obtained at compilation do not need to be parsed to read the ABI
 
 export default function Countdown() {
   const [days, setDays] = useState();
   const [hours, setHours] = useState();
   const [minutes, setMinutes] = useState();
   const [seconds, setSeconds] = useState();
-
-  // // console.log(
-  // //   "compiledLotteryManagerContract =",
-  // //   compiledLotteryManagerContract
-  // // ); // TO BE DELETED
-  // // console.log(
-  // //   "typeof compiledLotteryManagerContract =",
-  // //   typeof compiledLotteryManagerContract
-  // // ); // TO BE DELETED
-  // // console.log(   "========================================================");
-  // console.log("lotteryManagerABI =", lotteryManagerABI); // TO BE DELETED
-  // // console.log("typeof lotteryManagerABI =", typeof lotteryManagerABI); // TO BE DELETED
 
   const { data, isLoading } = useContractRead({
     // const { data, isLoading, error, refetch } = useContractRead({ // is there a need to implement logic for error and/or refetch?
@@ -45,23 +29,20 @@ export default function Countdown() {
   useEffect(() => {
     if (data && !isLoading) {
       const dataNber = parseInt(data.toString());
-      console.log("dataNber = ", dataNber);
-      console.log("typeof dataNber = ", typeof dataNber);
+
+      console.log("dataNber = ", dataNber); // TO BE DELETED
+      console.log("typeof dataNber = ", typeof dataNber); // TO BE DELETED
     }
   }, [data, isLoading]);
 
-  // console.log("typeof data = ", typeof data); // TO BE DELETED
-  // // console.log("data = ", data); // TO BE DELETED
-  // const dataString = data.toString();
-  // const dataNber = parseInt(dataString);
-  // console.log("typeof dataNber = ", typeof dataNber); // TO BE DELETED
-
   const now = new Date();
-  // const timeNow = now.getTime(); // TO BE DELETED
-  // console.log(timeNow); // TO BE DELETED
-  // console.log("typeof timeNow = ", typeof timeNow); // => returns "number"
 
-  // if (isLoading) return <span>Loading...</span>;
+  if (isLoading)
+    return (
+      <Text fontSize="xs" color="white">
+        Loading...
+      </Text>
+    );
   // if (error) return <span>Error: {JSON.stringify(error)}</span>;
 
   return (
