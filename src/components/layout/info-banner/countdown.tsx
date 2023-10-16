@@ -12,10 +12,13 @@ import compiledLotteryManagerContract from "@/assets/ABIs/Lottery_Manager_v0.1.s
 const lotteryManagerABI = compiledLotteryManagerContract.abi;
 
 export default function Countdown() {
-  const [days, setDays] = useState();
-  const [hours, setHours] = useState();
-  const [minutes, setMinutes] = useState();
-  const [seconds, setSeconds] = useState();
+  // const initialTarget = new Date("October 16, 2023 18:00:00"); // TO BE DELETED
+
+  const [nextTarget, setNextTarget] = useState(0);
+  const [days, setDays] = useState(0);
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   const { data, isLoading } = useContractRead({
     // const { data, isLoading, error, refetch } = useContractRead({
@@ -29,16 +32,60 @@ export default function Countdown() {
 
   useEffect(() => {
     if (data && !isLoading) {
-      console.log("data =", data); // => data = 1698076800n
-      console.log("typeof data =", typeof data); // => typeof data = bigint
+      console.log("data =", data); // => data = 1698076800n // TO BE DELETED
+      console.log("typeof data =", typeof data); // => typeof data = bigint // TO BE DELETED
 
       const dataNber = parseInt(data.toString());
       const data_in_ms = dataNber * 1000;
 
-      console.log("data_in_ms = ", data_in_ms); // TO BE DELETED
-      console.log("typeof data_in_ms = ", typeof data_in_ms); // TO BE DELETED
+      console.log("data_in_ms = ", data_in_ms); // data_in_ms = 1698076800000 // TO BE DELETED
+      console.log("typeof data_in_ms = ", typeof data_in_ms); // => typeof data_in_ms = number // TO BE DELETED
+
+      setNextTarget(data_in_ms);
+      console.log("nextTarget = ", nextTarget); // nextTarget = 1698076800000 // TO BE DELETED
+
+      //----------------------------------------------------------------
+      const interval = setInterval(() => {
+        // the content of this function will be executed every time after a certain interval of time, which is passed at the end of the function
+
+        const now = new Date();
+        const difference = nextTarget - now.getTime();
+
+        console.log("difference = ", difference); // TO BE DELETED
+
+        // // rounding up the difference between current time and target time in days
+        // // (skip exceeding hours, minutes and seconds) ->
+        // const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        // setDays(d);
+
+        // // using modulo to get only the remainder of the difference in hours, then min. and sec. ->
+        // const h = Math.floor(
+        //   (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        // );
+        // setHours(h);
+        // const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        // setMinutes(m);
+        // const s = Math.floor((difference % (1000 * 60)) / 1000);
+        // setSeconds(s);
+
+        // // when countdown reaches zero, execute the following piece of code ->
+        // if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
+        //   // setting up the next countdown
+        //   // const newTarget: Date = new Date(nextTarget.getTime() + 604800000); // here 604800000 is the number of milliseconds within one week
+        //   const newTarget: Date = new Date(nextTarget.getTime() + 86400000); // here 86400000 is the number of milliseconds within a day
+        //   setNextTarget(newTarget);
+
+        //   // opens a modal with a button to "Run the on-chain Lottery Draw"
+
+        //   // adding a modal displaying an animation while the lottery process is running would be cool
+        // }
+
+        // end of the "interval" function
+      }, 1000); // here "1000" means 1 second, so our timer will refresh every 1 second
+      // }, 10000); // here "10000" means 10 seconds, so our timer will refresh every 10 seconds // TO BE DELETED
+      //----------------------------------------------------------------
     }
-  }, [data, isLoading]);
+  }, [data, isLoading, nextTarget]);
 
   // #################################
   // const now = new Date();
