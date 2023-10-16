@@ -11,8 +11,6 @@ import compiledLotteryManagerContract from "@/assets/ABIs/Lottery_Manager_v0.1.s
 const lotteryManagerABI = compiledLotteryManagerContract.abi; // unlike cairo-0 contracts, for contracts written in latest cairo versions, the `.sierra.json` file does not need to be parsed to read the ABI
 
 export default function Countdown() {
-  // const initialTarget = new Date("October 23, 2023 18:00:00"); // TO BE DELETED
-
   const [nextTarget, setNextTarget] = useState(0);
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
@@ -72,18 +70,14 @@ export default function Countdown() {
           if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
             setTimerStatus(!timerStatus);
 
-            // // OPENING A MODAL WITH A BUTTON TO "Run the on-chain Lottery Draw"
-            // // (displaying an animation while the lottery process is running would be cool)
-            // // SETTING UP THE NEW COUNTDOWN TIMER
-            // const newTarget: Date = new Date(nextTarget.getTime() + 604800000); // here 604800000 is the number of milliseconds within one week
-            // const newTarget: Date = new Date(nextTarget.getTime() + 86400000); // here 86400000 is the number of milliseconds within a day
+            // BELOW IS MOST LIKELY TO BE DELETED BECAUSE THE NEW MIN_TIME FOR NEW LOTTERY DRAW IS SET BY THE LOTTERY CONTRACT, NOT THE FRONTEND APP
+            // const newTarget: number = nextTarget + 604800000; // here, 604800000 is the number of milliseconds within one week (use 86400000 for 1 day instead of 1 week)
             // setNextTarget(newTarget);
           }
         }
 
         // end of the "interval" function
-      }, 1000); // here "1000" means 1 second, so our timer will refresh every 1 second
-      // }, 10000); // here "10000" means 10 seconds, so our timer will refresh every 10 seconds // TO BE DELETED
+      }, 1000); // here "1000" means 1 second, so our timer will refresh every second
       //----------------------------------------------------------------
     }
   }, [data, isLoading, nextTarget, timerStatus]);
