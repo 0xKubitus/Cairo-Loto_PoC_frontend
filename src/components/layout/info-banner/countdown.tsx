@@ -6,10 +6,10 @@ import { Text } from "@chakra-ui/react";
 import { json } from "starknet";
 
 import environment from "../../../../environment";
-// import lotteryManagerABI from "@/assets/ABIs/abi_LotteryManager_v0.x.x.json";
-import compiledLotteryManagerContract from "@/assets/ABIs/my_project_Example.sierra.json"; // TO BE REPLACED BY THE LOTTERY MANAGER'S CONTRACT SIERRA REPRESENTATION (obtained when compiling)
-
-const lotteryManagerABI = compiledLotteryManagerContract.abi; // Cairo1 contracts' `.sierra` file obtained at compilation do not need to be parsed to read the ABI
+// import lotteryManagerABI from "@/assets/ABIs/abi_LotteryManager_v0.x.x.json"; // (syntax example to import ABI for contracts written in cairo-0)
+import compiledLotteryManagerContract from "@/assets/ABIs/Lottery_Manager_v0.1.sierra.json"; // (for contracts not in cairo-0, import the `.sierra.json` obtained when compiling the contract)
+// unlike cairo-0 contracts, for contracts written in latest cairo versions, the `.sierra.json` file does not need to be parsed to read the ABI
+const lotteryManagerABI = compiledLotteryManagerContract.abi;
 
 export default function Countdown() {
   const [days, setDays] = useState();
@@ -18,24 +18,36 @@ export default function Countdown() {
   const [seconds, setSeconds] = useState();
 
   const { data, isLoading } = useContractRead({
-    // const { data, isLoading, error, refetch } = useContractRead({ // is there a need to implement logic for error and/or refetch?
+    // const { data, isLoading, error, refetch } = useContractRead({
+    // is there a need to implement logic for error and/or refetch?
     address: environment.LotteryManagerAddress,
     abi: lotteryManagerABI,
-    functionName: "get_stored_timestamp",
+    functionName: "get_next_draw_min_time",
     args: [],
-    watch: false,
+    watch: false, // should I use `watch: true` instead?
   });
 
   useEffect(() => {
     if (data && !isLoading) {
-      const dataNber = parseInt(data.toString());
+      console.log("data =", data); // => data = 1698076800n
+      console.log("typeof data =", typeof data); // => typeof data = bigint
 
-      console.log("dataNber = ", dataNber); // TO BE DELETED
-      console.log("typeof dataNber = ", typeof dataNber); // TO BE DELETED
+      const dataNber = parseInt(data.toString());
+      const data_in_ms = dataNber * 1000;
+
+      console.log("data_in_ms = ", data_in_ms); // TO BE DELETED
+      console.log("typeof data_in_ms = ", typeof data_in_ms); // TO BE DELETED
     }
   }, [data, isLoading]);
 
-  const now = new Date();
+  // #################################
+  // const now = new Date();
+  // console.log("now = ", now); // => Mon Oct 16 2023 13:44:30 GMT+0200 (Central European Summer Time)
+  // console.log("now.getTime() = ", now.getTime()); // => 1697456541612
+
+  // const next_date = new Date("October 16, 2023 18:00:00");
+  // console.log("parsed_next_date = ", Date.parse("October 16, 2023 18:00:00"));
+  // #################################
 
   if (isLoading)
     return (
