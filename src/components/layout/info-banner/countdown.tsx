@@ -45,40 +45,39 @@ export default function Countdown() {
       console.log("nextTarget = ", nextTarget); // nextTarget = 1698076800000 // TO BE DELETED
 
       //----------------------------------------------------------------
+      // the content of this function will be executed every time after a certain interval of time, which is passed at the end of the function
       const interval = setInterval(() => {
-        // the content of this function will be executed every time after a certain interval of time, which is passed at the end of the function
-
         const now = new Date();
         const difference = nextTarget - now.getTime();
 
-        console.log("difference = ", difference); // TO BE DELETED
+        if (difference >= 0) {
+          console.log("difference = ", difference); // TO BE DELETED
 
-        // // rounding up the difference between current time and target time in days
-        // // (skip exceeding hours, minutes and seconds) ->
-        // const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-        // setDays(d);
+          // rounding up the difference between current time and target time in days
+          // (skip exceeding hours, minutes and seconds) ->
+          const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+          setDays(d);
 
-        // // using modulo to get only the remainder of the difference in hours, then min. and sec. ->
-        // const h = Math.floor(
-        //   (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        // );
-        // setHours(h);
-        // const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-        // setMinutes(m);
-        // const s = Math.floor((difference % (1000 * 60)) / 1000);
-        // setSeconds(s);
+          // using modulo to get only the remainder of the difference in hours, then min. and sec. ->
+          const h = Math.floor(
+            (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          );
+          setHours(h);
+          const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          setMinutes(m);
+          const s = Math.floor((difference % (1000 * 60)) / 1000);
+          setSeconds(s);
 
-        // // when countdown reaches zero, execute the following piece of code ->
-        // if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-        //   // setting up the next countdown
-        //   // const newTarget: Date = new Date(nextTarget.getTime() + 604800000); // here 604800000 is the number of milliseconds within one week
-        //   const newTarget: Date = new Date(nextTarget.getTime() + 86400000); // here 86400000 is the number of milliseconds within a day
-        //   setNextTarget(newTarget);
-
-        //   // opens a modal with a button to "Run the on-chain Lottery Draw"
-
-        //   // adding a modal displaying an animation while the lottery process is running would be cool
-        // }
+          // when countdown reaches zero, execute the following piece of code ->
+          // if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
+          // // OPENING A MODAL WITH A BUTTON TO "Run the on-chain Lottery Draw"
+          // // (displaying an animation while the lottery process is running would be cool)
+          // // SETTING UP THE NEW COUNTDOWN TIMER
+          // const newTarget: Date = new Date(nextTarget.getTime() + 604800000); // here 604800000 is the number of milliseconds within one week
+          // const newTarget: Date = new Date(nextTarget.getTime() + 86400000); // here 86400000 is the number of milliseconds within a day
+          // setNextTarget(newTarget);
+          // }
+        }
 
         // end of the "interval" function
       }, 1000); // here "1000" means 1 second, so our timer will refresh every 1 second
