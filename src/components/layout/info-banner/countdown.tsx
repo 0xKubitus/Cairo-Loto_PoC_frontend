@@ -20,37 +20,27 @@ export default function Countdown() {
 
   const { data, isLoading } = useContractRead({
     // const { data, isLoading, error, refetch } = useContractRead({
-    // is there a need to implement logic for error and/or refetch?
+    // QUESTION => is there a need to implement logic for error and/or refetch?
     address: environment.LotteryManagerAddress,
     abi: lotteryManagerABI,
     functionName: "get_next_draw_min_time",
     args: [],
-    watch: false, // should I use `watch: true` instead?
+    watch: true,
   });
 
   useEffect(() => {
     if (data && !isLoading) {
-      // console.log("data =", data); // => data = 1698076800n // TO BE DELETED
-      // console.log("typeof data =", typeof data); // => typeof data = bigint // TO BE DELETED
-
       const dataNber = parseInt(data.toString());
       const data_in_ms = dataNber * 1000;
 
-      // console.log("data_in_ms = ", data_in_ms); // data_in_ms = 1698076800000 // TO BE DELETED
-      // console.log("typeof data_in_ms = ", typeof data_in_ms); // => typeof data_in_ms = number // TO BE DELETED
-
       setNextTarget(data_in_ms);
-      // console.log("nextTarget = ", nextTarget); // nextTarget = 1698076800000 // TO BE DELETED
 
-      //----------------------------------------------------------------
       // the content of this function will be executed every time after a certain interval of time, which is passed at the end of the function
       const interval = setInterval(() => {
         const now = new Date();
         const difference = nextTarget - now.getTime();
 
         if (difference >= 0) {
-          // console.log("difference = ", difference); // TO BE DELETED
-
           // rounding up the difference between current time and target time in days
           // (skip exceeding hours, minutes and seconds) ->
           const d = Math.floor(difference / (1000 * 60 * 60 * 24));

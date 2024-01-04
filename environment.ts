@@ -20,7 +20,7 @@ const global = {
     // "0x05bb38d5bfb0e6b4918edc3a02839981afd49dd27b3566cba0d2be50333bed28", // TicketsHandler v0.4.3.2 (currently testing if deposit to zkLend is working)
     "0x00a0ca16d70d6cc5433a4892c6aec42d5b681e5842a741ad45876d2225ec4aee", // TicketsHandler v0.4.4 (LATEST = burn now withdraws from zklend - or at least, that's what I'm trying to verify now)
   LotteryManagerAddress:
-    "0x04f1ff027e698232a7bb76db935f8e28c80b0215a9797dd27f3da38acf8059d6", // LotteryManager v0.1
+    "0x04f1ff027e698232a7bb76db935f8e28c80b0215a9797dd27f3da38acf8059d6", // LotteryManager v0.1 (CAIRO 2 contract)
   // "0x058e5dc9402b3e57717fddd05f4eefac817c90ea82486a9a22acd962bf211750", // not a lottery contract (just a timestamp that can be set and read)
   dev: false,
 };
